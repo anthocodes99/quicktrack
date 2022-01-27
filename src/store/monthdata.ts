@@ -42,7 +42,13 @@ export const useMonthdataStore = defineStore('monthdata', () => {
             (monthdata) => monthdata.id == transaction.monthdata
         )
         if (!month) return
-        month[type].push(transaction)
+        // FIXME: Fix this special case smelly code
+        // API to serialize to previousbalances instead of previous_balances
+        const chk =
+            type == TransactionType.PreviousBalances
+                ? 'previous_balances'
+                : type
+        month[chk].push(transaction)
     }
 
     function deleteTransaction(
@@ -53,9 +59,15 @@ export const useMonthdataStore = defineStore('monthdata', () => {
             (monthdata) => monthdata.id == transaction.monthdata
         )
         if (!monthdata) return
-        const idx = monthdata[type].indexOf(transaction)
+        // FIXME: Fix this special case smelly code
+        // API to serialize to previousbalances instead of previous_balances
+        const chk =
+            type == TransactionType.PreviousBalances
+                ? 'previous_balances'
+                : type
+        const idx = monthdata[chk].indexOf(transaction)
         if (idx == -1) return
-        monthdata[type].splice(idx, 1)
+        monthdata[chk].splice(idx, 1)
     }
 
     async function hydrateMonthdata(id: number) {

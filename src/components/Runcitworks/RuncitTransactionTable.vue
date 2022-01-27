@@ -29,21 +29,20 @@ const config = {
 const submitTransaction = async function (event) {
     const formData = Object.fromEntries(new FormData(event.target))
     let data = {}
-    if (props.type != TransactionType.Expenses) {
+    if (props.type == TransactionType.Expenses) {
+        data = {
+            monthdata: props.currentMonthId,
+            date: formData.date,
+            description: formData.description,
+            unit_price: formData.unitprice,
+            quantity: formData.quantity,
+        }
+    } else {
         // sale / purchase / previousbalance
         data = {
             monthdata: props.currentMonthId,
             date: formData.date,
             product: formData.product,
-            unit_price: formData.unitprice,
-            quantity: formData.quantity,
-        }
-    } else {
-        // expense
-        data = {
-            monthdata: props.currentMonthId,
-            date: formData.date,
-            description: formData.description,
             unit_price: formData.unitprice,
             quantity: formData.quantity,
         }
@@ -157,6 +156,7 @@ const deleteTransaction = async function (transaction) {
                             name="date"
                             id="transaction-date"
                             required
+                            v-if="type != 'previousbalances'"
                         />
                     </td>
 
@@ -218,4 +218,8 @@ const deleteTransaction = async function (transaction) {
     </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fas:hover {
+    cursor: pointer;
+}
+</style>

@@ -10,6 +10,8 @@ import TheNavbar from '../components/TheNavbar.vue'
 import RuncitAddMonthModal from '../components/Runcitworks/RuncitAddMonthModal.vue'
 import RuncitPurchaseSales from '../components/Runcitworks/RuncitPurchaseSales.vue'
 import { useProgressBar } from '../composables/progressbar'
+import RuncitExpenses from '../components/Runcitworks/RuncitExpenses.vue'
+import RuncitPreviousBalances from '../components/Runcitworks/RuncitPreviousBalances.vue'
 
 // Composables
 const toast = useToast()
@@ -75,7 +77,7 @@ onMounted(async () => {
             />
             <header class="container-xxl row">
                 <div class="col">
-                    <h1 class="text-orange">Runcit Works</h1>
+                    <h1>Runcit Works</h1>
                 </div>
                 <div class="col">
                     <div class="row">
@@ -197,9 +199,9 @@ onMounted(async () => {
             </template>
             <template v-else-if="monthdatas.length == 0">
                 <div class="pt-5">
-                    <h3 class="text-center fs-3">
+                    <h1 class="text-center fs-3">
                         You haven't initialized a month yet
-                    </h3>
+                    </h1>
                     <p class="text-center lead">
                         Click on the plus(+) above to add a new month.
                     </p>
@@ -223,13 +225,7 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-expenses-tab"
                     >
-                        <h1>Product Table</h1>
-                        <!-- <ProductTable
-                                :transactions="curr_monthdata.expenses ?? []"
-                                :currmonthid="curr_monthdata.id"
-                                :type="'expenses'"
-                                :products="curr_monthdata.products"
-                            /> -->
+                        <RuncitExpenses :currentMonthData="currentMonthdata" />
                     </div>
                     <div
                         class="tab-pane fade"
@@ -237,12 +233,9 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-profile-tab"
                     >
-                        <h1 class="text-orange">Runcit Previous Balance</h1>
-                        <!-- <RuncitPreviousBalance
-                                :transactions="curr_monthdata.previous_balances"
-                                :currmonthid="curr_monthdata.id"
-                                :products="curr_monthdata.products"
-                            /> -->
+                        <RuncitPreviousBalances
+                            :currentMonthData="currentMonthdata"
+                        />
                     </div>
                     <div
                         class="tab-pane fade"
