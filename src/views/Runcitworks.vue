@@ -2,6 +2,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 
 import { useToast } from '../composables/toast'
+import { useProgressBar } from '../composables/progressbar'
 import { useMonthdataStore } from '../store/monthdata'
 
 import { Monthdata } from '../models/monthdata'
@@ -9,9 +10,9 @@ import { Monthdata } from '../models/monthdata'
 import TheNavbar from '../components/TheNavbar.vue'
 import RuncitAddMonthModal from '../components/Runcitworks/RuncitAddMonthModal.vue'
 import RuncitPurchaseSales from '../components/Runcitworks/RuncitPurchaseSales.vue'
-import { useProgressBar } from '../composables/progressbar'
 import RuncitExpenses from '../components/Runcitworks/RuncitExpenses.vue'
 import RuncitPreviousBalances from '../components/Runcitworks/RuncitPreviousBalances.vue'
+import RuncitCurrentBalance from '../components/Runcitworks/RuncitCurrentBalance.vue'
 
 // Composables
 const toast = useToast()
@@ -243,8 +244,9 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-contact-tab"
                     >
-                        <h1>Runcit Balance</h1>
-                        <!-- <RuncitBalance /> -->
+                        <RuncitCurrentBalance
+                            :currentMonthData="currentMonthdata"
+                        />
                     </div>
                     <div
                         class="tab-pane fade"

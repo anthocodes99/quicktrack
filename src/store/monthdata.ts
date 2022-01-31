@@ -10,7 +10,6 @@ import { useToast } from '../composables/toast'
 
 // types
 import { Monthdata, Transaction, TransactionType } from '../models/monthdata'
-import { propsToAttrMap } from '@vue/shared'
 
 export const useMonthdataStore = defineStore('monthdata', () => {
     // initialzation
