@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { ref, toDisplayString } from 'vue'
+import { ref } from 'vue'
 
 import { defineStore } from 'pinia'
 
@@ -9,7 +9,12 @@ import { useStore } from '.'
 import { useToast } from '../composables/toast'
 
 // types
-import { Monthdata, Transaction, TransactionType } from '../models/monthdata'
+import {
+    RawMonthdata,
+    Monthdata,
+    Transaction,
+    TransactionType,
+} from '../models/monthdata'
 
 export const useMonthdataStore = defineStore('monthdata', () => {
     // initialzation
@@ -35,6 +40,25 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         monthdatas.value[idx] = updMonthdata
     }
 
+    function numerifyMonthdata(updMonthdata: RawMonthdata) {
+        // backend serializes decimal into string type
+        // I decided to process the data first so we don't
+        // have to do it later
+        return {
+            id: updMonthdata.id,
+            month: updMonthdata.month,
+            products: updMonthdata.products,
+            sales: updMonthdata.sales,
+            expenses: updMonthdata.expenses,
+            purchases: updMonthdata.purchases,
+            previous_balances: updMonthdata.previous_balances,
+            user: updMonthdata.user,
+            starting_modal: parseFloat(updMonthdata.starting_modal),
+            cashout: parseFloat(updMonthdata.cashout),
+            profit_balance: parseFloat(updMonthdata.profit_balance),
+        }
+    }
+
     // actions
     function addTransaction(type: TransactionType, transaction: Transaction) {
         const month = monthdatas.value.find(
@@ -44,9 +68,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         // FIXME: Fix this special case smelly code
         // API to serialize to previousbalances instead of previous_balances
         const chk =
-            type == TransactionType.PreviousBalances
-                ? 'previous_balances'
-                : type
+            type == TransactionType.PreviousBalance ? 'previous_balances' : type
         month[chk].push(transaction)
     }
 
@@ -61,9 +83,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         // FIXME: Fix this special case smelly code
         // API to serialize to previousbalances instead of previous_balances
         const chk =
-            type == TransactionType.PreviousBalances
-                ? 'previous_balances'
-                : type
+            type == TransactionType.PreviousBalance ? 'previous_balances' : type
         const idx = monthdata[chk].indexOf(transaction)
         if (idx == -1) return
         monthdata[chk].splice(idx, 1)
@@ -76,7 +96,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
             axios.get(`/api/v1/monthdatas/${id}`, config)
         )
         if (res) {
-            updateMonthdata(id, res.data)
+            updateMonthdata(id, numerifyMonthdata(res.data))
             return
         }
         // else
@@ -96,7 +116,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
                 axios.get(`/api/v1/monthdatas/${res.data[0].id}`, config)
             )
             if (mdres) {
-                updateMonthdata(mdres.data.id, mdres.data)
+                updateMonthdata(mdres.data.id, numerifyMonthdata(mdres.data))
                 isInitialized.value = true
                 return
             }
@@ -108,6 +128,20 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         toast.error('Failed to retrieve data.', error.data)
     }
 
+    function updateStartingModal(monthId, amount) {
+        const updMonth = monthdatas.value.find((month) => month.id == monthId)
+        if (!updMonth) return
+        updMonth.starting_modal = amount
+        // updateMonthdata(monthId, updMonth)
+    }
+
+    function updateCashout(monthId, amount) {
+        const updMonth = monthdatas.value.find((month) => month.id == monthId)
+        if (!updMonth) return
+        updMonth.cashout = amount
+        // updateMonthdata(monthId, updMonth)
+    }
+
     return {
         monthdatas,
         isInitialized,
@@ -115,5 +149,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         deleteTransaction,
         initMontdatas,
         hydrateMonthdata,
+        updateStartingModal,
+        updateCashout,
     }
 })

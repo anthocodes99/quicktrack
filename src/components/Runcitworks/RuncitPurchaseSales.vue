@@ -14,14 +14,14 @@ const props = defineProps<Props>()
     <RuncitTransactionTable
         :transactions="curr_monthdata.purchases ?? []"
         :currentMonthId="curr_monthdata.id"
-        :type="TransactionType.Purchases"
+        :type="TransactionType.Purchase"
         :products="curr_monthdata.products"
     />
     <h1 class="">Sales</h1>
     <RuncitTransactionTable
         :transactions="curr_monthdata.sales ?? []"
         :currentMonthId="curr_monthdata.id"
-        :type="TransactionType.Sales"
+        :type="TransactionType.Sale"
         :products="curr_monthdata.products"
     />
 </template>

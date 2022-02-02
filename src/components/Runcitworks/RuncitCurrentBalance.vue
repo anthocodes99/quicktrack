@@ -91,21 +91,7 @@ const currentBalanceTable = computed(() => {
 const performanceTable = computed(() => {
     let table = <PerformanceTableItem[]>[]
     props.currentMonthData.products.forEach((product) => {
-        // unitprofit
-        // (Amount Sold / Quantity Sold) -
-        // (Amount Bought + Amount PrevBal) / (Quantity Bought + Quantity PrevBal)
-        const purchaseUnitPrice = runcitworks.getPurchaseUnitPrice(product)
-
-        const saleUnitPrice = runcitworks.getSaleUnitPrice(product)
-        const unitProfit = saleUnitPrice - purchaseUnitPrice
-        const netProfit =
-            runcitworks.getTotalSoldByProduct(product) * unitProfit
-        const item = {
-            product,
-            unitProfit,
-            netProfit,
-        }
-        table.push(item)
+        table.push(runcitworks.calculateProductPerformance(product))
     })
     return table
 })

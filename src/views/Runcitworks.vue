@@ -13,6 +13,7 @@ import RuncitPurchaseSales from '../components/Runcitworks/RuncitPurchaseSales.v
 import RuncitExpenses from '../components/Runcitworks/RuncitExpenses.vue'
 import RuncitPreviousBalances from '../components/Runcitworks/RuncitPreviousBalances.vue'
 import RuncitCurrentBalance from '../components/Runcitworks/RuncitCurrentBalance.vue'
+import RuncitCashFlow from '../components/Runcitworks/RuncitCashFlow.vue'
 
 // Composables
 const toast = useToast()
@@ -254,8 +255,7 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-contact-tab"
                     >
-                        <h1>Runcit CashFlow</h1>
-                        <!-- <RuncitCashFlow /> -->
+                        <RuncitCashFlow :currentMonthData="currentMonthdata" />
                     </div>
                     <div
                         class="tab-pane fade"

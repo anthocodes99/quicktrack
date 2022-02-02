@@ -29,7 +29,7 @@ const config = {
 const submitTransaction = async function (event) {
     const formData = Object.fromEntries(new FormData(event.target))
     let data = {}
-    if (props.type == TransactionType.Expenses) {
+    if (props.type == TransactionType.Expense) {
         data = {
             monthdata: props.currentMonthId,
             date: formData.date,

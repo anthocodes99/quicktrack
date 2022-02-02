@@ -1,3 +1,18 @@
+export interface RawMonthdata {
+    id: number
+    month: string
+    products: string[]
+    user: number
+    starting_modal: string
+    cashout: string
+    profit_balance: string
+
+    purchases: Transaction[]
+    sales: Transaction[]
+    expenses: Transaction[]
+    previous_balances: Transaction[]
+}
+
 export interface Monthdata {
     id: number
     month: string
@@ -42,8 +57,8 @@ export interface Transaction {
 // }
 
 export enum TransactionType {
-    Purchases = 'purchases',
-    Sales = 'sales',
-    Expenses = 'expenses',
-    PreviousBalances = 'previousbalances',
+    Purchase = 'purchases',
+    Sale = 'sales',
+    Expense = 'expenses',
+    PreviousBalance = 'previousbalances',
 }

@@ -1,7 +1,7 @@
-import { computed, ref, Ref } from 'vue'
-import { Monthdata } from '../models/monthdata'
+import { Ref } from 'vue'
+import { Monthdata, Transaction } from '../models/monthdata'
 
-enum TransactionType {
+enum MonthdataTransactionType {
     Purchase = 'purchases',
     Sale = 'sales',
     PreviousBalance = 'previous_balances',
@@ -9,16 +9,25 @@ enum TransactionType {
 }
 
 const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
-    const _filterByProduct = function (type: TransactionType, product: string) {
+    const _filterByProduct = function (
+        type: MonthdataTransactionType,
+        product: string
+    ) {
         // if (!currentMonthData.value) return
         return currentMonthData.value[type].filter(
             (tran) => tran.product == product
         )
     }
 
+    const accumulateAllTransactions = function (transactions: Transaction[]) {
+        return transactions
+            .map((tran) => tran.quantity * parseFloat(tran.unit_price))
+            .reduce((acc, curr) => acc + curr, 0)
+    }
+
     const getTotalBoughtByProduct = function (product: string) {
         const filteredTrans = _filterByProduct(
-            TransactionType.Purchase,
+            MonthdataTransactionType.Purchase,
             product
         )
         // returns undefined OR 0
@@ -29,7 +38,10 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
     }
 
     const getTotalSoldByProduct = function (product: string) {
-        const filteredTrans = _filterByProduct(TransactionType.Sale, product)
+        const filteredTrans = _filterByProduct(
+            MonthdataTransactionType.Sale,
+            product
+        )
         // returns undefined OR 0
         // if (!filteredTrans) return
         return filteredTrans
@@ -39,7 +51,7 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
 
     const getPreviousBalanceByProduct = function (product: string) {
         const filteredTrans = _filterByProduct(
-            TransactionType.PreviousBalance,
+            MonthdataTransactionType.PreviousBalance,
             product
         )
         // returns undefined OR 0
@@ -57,16 +69,9 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
         return totalBought + totalPrevBal - totalSold
     }
 
-    const getTotalSaleByProduct = function (product) {
-        const filteredTrans = _filterByProduct(TransactionType.Sale, product)
-        return filteredTrans
-            .map((tran) => parseFloat(tran.unit_price) * tran.quantity)
-            .reduce((acc, curr) => acc + curr, 0)
-    }
-
-    const getTotalPurchaseByProduct = function (product) {
+    const getTotalSaleByProduct = function (product: string) {
         const filteredTrans = _filterByProduct(
-            TransactionType.Purchase,
+            MonthdataTransactionType.Sale,
             product
         )
         return filteredTrans
@@ -74,9 +79,19 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
             .reduce((acc, curr) => acc + curr, 0)
     }
 
-    const getTotalPreviousBalanceByProduct = function (product) {
+    const getTotalPurchaseByProduct = function (product: string) {
         const filteredTrans = _filterByProduct(
-            TransactionType.PreviousBalance,
+            MonthdataTransactionType.Purchase,
+            product
+        )
+        return filteredTrans
+            .map((tran) => parseFloat(tran.unit_price) * tran.quantity)
+            .reduce((acc, curr) => acc + curr, 0)
+    }
+
+    const getTotalPreviousBalanceByProduct = function (product: string) {
+        const filteredTrans = _filterByProduct(
+            MonthdataTransactionType.PreviousBalance,
             product
         )
         // return undefined OR 0
@@ -91,19 +106,50 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
         const totalPrevBal = getPreviousBalanceByProduct(product)
         const totalCostBought = getTotalPurchaseByProduct(product)
         const totalCostPrevBal = getTotalPreviousBalanceByProduct(product)
-        return (
-            (totalBought + totalPrevBal) / (totalCostBought + totalCostPrevBal)
-        )
+
+        const purchaseUnitPrice =
+            (totalCostBought + totalCostPrevBal) / (totalBought + totalPrevBal)
+        return isNaN(purchaseUnitPrice) ? 0 : purchaseUnitPrice
     }
 
     const getSaleUnitPrice = function (product: string) {
         const totalSold = getTotalSoldByProduct(product)
         const totalSale = getTotalSaleByProduct(product)
 
-        return totalSale / totalSold
+        const saleUnitPrice = totalSale / totalSold
+        return isNaN(saleUnitPrice) ? 0 : saleUnitPrice
     }
+
+    function calculateProductPerformance(product: string) {
+        // unitprofit
+        // (Amount Sold / Quantity Sold) -
+        // (Amount Bought + Amount PrevBal) / (Quantity Bought + Quantity PrevBal)
+        const purchaseUnitPrice = getPurchaseUnitPrice(product)
+
+        const saleUnitPrice = getSaleUnitPrice(product)
+        const unitProfit = saleUnitPrice - purchaseUnitPrice
+        const netProfit = getTotalSoldByProduct(product) * unitProfit
+        const item = {
+            product,
+            unitProfit,
+            netProfit,
+        }
+        return item
+    }
+
+    const calculateAssets = function (
+        totalPurchase: number,
+        totalSale: number,
+        totalProfit: number,
+        totalPreviousBalance: number
+    ) {
+        // previous balance + purchases + profit - sales
+        return totalPreviousBalance + totalPurchase + totalProfit - totalSale
+    }
+
     return {
         currentMonthData,
+        accumulateAllTransactions,
         getTotalBoughtByProduct,
         getTotalSoldByProduct,
         getPreviousBalanceByProduct,
@@ -113,6 +159,8 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
         getTotalPreviousBalanceByProduct,
         getPurchaseUnitPrice,
         getSaleUnitPrice,
+        calculateProductPerformance,
+        calculateAssets,
     }
 }
 

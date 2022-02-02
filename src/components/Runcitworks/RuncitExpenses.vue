@@ -14,7 +14,7 @@ const props = defineProps<Props>()
     <RuncitTransactionTable
         :transactions="currentMonthData.expenses ?? []"
         :currentMonthId="currentMonthData.id"
-        :type="TransactionType.Expenses"
+        :type="TransactionType.Expense"
         :products="currentMonthData.products"
     />
 </template>
