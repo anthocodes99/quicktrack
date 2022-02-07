@@ -63,8 +63,11 @@ onMounted(async () => {
     if (monthdatas.value.length == 0) {
         await monthdataStore.initMontdatas()
     }
+
+    // In case of a new user(with no monthdatas)
+    if (monthdatas.value.length !== 0)
+        monthChosen.value = monthdatas.value[0].month
     // finally
-    monthChosen.value = monthdatas.value[0].month
     progressBar.addProgress(40)
     isInitialized.value = true
 })
@@ -204,7 +207,7 @@ onMounted(async () => {
             <template v-else-if="monthdatas.length == 0">
                 <div class="pt-5">
                     <h1 class="text-center fs-3">
-                        You haven't initialized a month yet
+                        You haven't initialized a month yet !
                     </h1>
                     <p class="text-center lead">
                         Click on the plus(+) above to add a new month.

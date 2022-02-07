@@ -112,6 +112,8 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         )
         if (res) {
             monthdatas.value = res.data
+            // In case of a new user.
+            if (res.data[0] === undefined) return
             const [mdres, mderr] = await destructureAxios(
                 axios.get(`/api/v1/monthdatas/${res.data[0].id}`, config)
             )
