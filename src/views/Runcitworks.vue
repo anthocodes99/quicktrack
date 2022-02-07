@@ -29,8 +29,8 @@ const monthChosen = ref('')
 const currentMonthdata = ref<Monthdata>()
 
 // Template functions
-function submitAddMonth(e) {
-    console.log('heyyy')
+function updateMonth(month: string) {
+    monthChosen.value = month
 }
 
 // Watches
@@ -76,7 +76,8 @@ onMounted(async () => {
         <div class="container-xxl col-lg-7 con-min-md">
             <RuncitAddMonthModal
                 :monthdatas="monthdatas"
-                @addMonth="submitAddMonth"
+                :currentMonthData="currentMonthdata"
+                @updateMonth="updateMonth"
             />
             <header class="container-xxl row">
                 <div class="col">

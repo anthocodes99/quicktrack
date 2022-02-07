@@ -61,6 +61,14 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
             .reduce((acc, curr) => acc + curr, 0)
     }
 
+    const getCurrentBalanceByProduct = function (product) {
+        const totalBought = getTotalBoughtByProduct(product)
+        const totalPrevBal = getPreviousBalanceByProduct(product)
+        const totalSold = getTotalSoldByProduct(product)
+        console.log({ totalBought }, { totalPrevBal }, { totalSold })
+        return calculateCurrentBalance(totalBought, totalSold, totalPrevBal)
+    }
+
     const calculateCurrentBalance = function (
         totalBought: number,
         totalSold: number,
@@ -89,7 +97,7 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
             .reduce((acc, curr) => acc + curr, 0)
     }
 
-    const getTotalPreviousBalanceByProduct = function (product: string) {
+    const getTotalPreviousBalanceValueByProduct = function (product: string) {
         const filteredTrans = _filterByProduct(
             MonthdataTransactionType.PreviousBalance,
             product
@@ -105,7 +113,7 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
         const totalBought = getTotalBoughtByProduct(product)
         const totalPrevBal = getPreviousBalanceByProduct(product)
         const totalCostBought = getTotalPurchaseByProduct(product)
-        const totalCostPrevBal = getTotalPreviousBalanceByProduct(product)
+        const totalCostPrevBal = getTotalPreviousBalanceValueByProduct(product)
 
         const purchaseUnitPrice =
             (totalCostBought + totalCostPrevBal) / (totalBought + totalPrevBal)
@@ -153,10 +161,11 @@ const useRuncitworks = function (currentMonthData: Ref<Monthdata>) {
         getTotalBoughtByProduct,
         getTotalSoldByProduct,
         getPreviousBalanceByProduct,
+        getCurrentBalanceByProduct,
         calculateCurrentBalance,
         getTotalPurchaseByProduct,
         getTotalSaleByProduct,
-        getTotalPreviousBalanceByProduct,
+        getTotalPreviousBalanceValueByProduct,
         getPurchaseUnitPrice,
         getSaleUnitPrice,
         calculateProductPerformance,
