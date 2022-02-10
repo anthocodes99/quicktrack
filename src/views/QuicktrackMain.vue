@@ -3,6 +3,9 @@ import TheNavbar from '../components/TheNavbar.vue'
 import { computed, onMounted, ref } from 'vue'
 import { useQuicktrackStore } from '../store/quicktrack'
 import { useProgressBar } from '../composables/progressbar'
+import HomeUserList from '../components/Quicktrack/HomeUserList.vue'
+import HomeAddUser from '../components/Quicktrack/HomeAddUser.vue'
+import HomeStats from '../components/Quicktrack/HomeStats.vue'
 
 const quicktrack = useQuicktrackStore()
 const progressBar = useProgressBar()
@@ -27,16 +30,13 @@ onMounted(async () => {
 
 <template>
     <TheNavbar />
-    <h1>Quicktrack</h1>
     <div v-if="!isInitialized">
         <h1>Loading...</h1>
     </div>
     <div v-else>
-        <ul>
-            <template v-for="account in accounts" :key="account.id">
-                <li>{{ account.username }} | {{ account.hutang }}</li>
-            </template>
-        </ul>
+        <HomeUserList :accounts="accounts" />
+        <HomeAddUser />
+        <HomeStats />
     </div>
 </template>
 
