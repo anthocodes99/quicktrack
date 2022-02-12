@@ -214,7 +214,7 @@ const submitPayment = async function (event) {
                         )
                     "
                 />
-                <DetailsAddHutang :account="account!" />
+                <DetailsAddHutang />
                 <DetailsSubmitPayment @submitPayment="submitPayment" />
             </div>
         </template>

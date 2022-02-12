@@ -6,17 +6,23 @@ import { useToast } from '../../composables/toast'
 import { destructureAxios } from '../../utils/utils'
 import axios from 'axios'
 import { Account } from '../../models/quicktrack'
+import { useRoute } from 'vue-router'
 
-interface Props {
-    account: Account
-}
+// interface Props {
+//     account: Account
+// }
 
-const props = defineProps<Props>()
+// const props = defineProps<Props>()
 
 // initialization
+const route = useRoute()
 const store = useStore()
 const quicktrack = useQuicktrackStore()
 const toast = useToast()
+
+const account = quicktrack.accounts.find(
+    (account) => account.id === parseInt(route.params.id)
+)
 
 const config = {
     headers: {
@@ -29,13 +35,14 @@ const addHutang = async function (event) {
     const { amount } = formData
 
     const data = {
-        hutang: props.account.hutang + amount,
+        hutang: account!.hutang + parseInt(amount),
     }
     const [res, err] = await destructureAxios(
-        axios.patch(`/api/accounts/${props.account.id}`, data, config)
+        axios.patch(`/api/accounts/${account!.id}`, data, config)
     )
 
     if (res) {
+        account!.hutang += parseFloat(amount)
         toast.success('Hutang Added!', 'Hutang added successfully.')
     }
 }
