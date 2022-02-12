@@ -14,9 +14,8 @@ import Login from '../views/Login.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', name: 'Home', component: Home },
         {
-            path: '/quicktrack',
+            path: '/',
             name: 'QuicktrackMain',
             component: QuicktrackMain,
             meta: { req_auth: true },
@@ -33,7 +32,6 @@ const router = createRouter({
             component: Runcitworks,
             meta: { req_auth: true },
         },
-        { path: '/toast', name: 'ToastView', component: ToastView },
         { path: '/login', name: 'Login', component: Login },
     ],
 })

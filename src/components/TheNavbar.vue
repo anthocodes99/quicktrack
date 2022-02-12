@@ -1,8 +1,10 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <router-link :to="{ name: 'Home' }" class="navbar-brand"
-                >Vite Lab</router-link
+            <router-link
+                :to="{ name: 'QuicktrackMain' }"
+                class="navbar-brand text-orange"
+                >Quicktrack</router-link
             >
             <button
                 class="navbar-toggler"
@@ -19,23 +21,9 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <router-link
-                            :to="{ name: 'QuicktrackMain' }"
-                            class="nav-link"
-                            >Quicktrack</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
                             :to="{ name: 'Runcitworks' }"
-                            class="nav-link"
+                            class="navbar-brand text-orange"
                             >Runcitworks</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            :to="{ name: 'ToastView' }"
-                            class="nav-link"
-                            >Toast</router-link
                         >
                     </li>
                 </ul>

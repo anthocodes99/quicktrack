@@ -37,4 +37,8 @@ small {
     color: #2c3e50;
     background-color: #131516;
 }
+
+.text-orange {
+    color: #e94f37 !important;
+}
 </style>
