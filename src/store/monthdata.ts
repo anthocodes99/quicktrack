@@ -89,6 +89,19 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         monthdata[chk].splice(idx, 1)
     }
 
+    function addProduct(id: number, product: string) {
+        const monthdata = monthdatas.value.find(
+            (monthdata) => monthdata.id == id
+        )
+        if (!monthdata)
+            return toast.error(
+                'Error',
+                'addProduct() monthdata does not exist!'
+            )
+        const updProducts = [...monthdata.products, product]
+        monthdata['products'] = updProducts
+    }
+
     async function hydrateMonthdata(id: number) {
         // Since MonthDataList does not provide transactions,
         // we have to "hydrate" the Month by retrieving from db.
@@ -149,6 +162,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         isInitialized,
         addTransaction,
         deleteTransaction,
+        addProduct,
         initMontdatas,
         hydrateMonthdata,
         updateStartingModal,

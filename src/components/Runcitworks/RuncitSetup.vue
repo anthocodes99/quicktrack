@@ -4,6 +4,7 @@ import { computed, onBeforeMount, ref, toRefs } from 'vue'
 import { useToast } from '../../composables/toast'
 import { Monthdata } from '../../models/monthdata'
 import { useStore } from '../../store'
+import { useMonthdataStore } from '../../store/monthdata'
 import { destructureAxios } from '../../utils/utils'
 
 interface Props {
@@ -19,6 +20,7 @@ const { currentMonthData } = toRefs(props)
 
 // init
 const store = useStore()
+const monthdata = useMonthdataStore()
 const toast = useToast()
 
 // local variables
@@ -48,6 +50,7 @@ const addProduct = async function (event) {
         )
     )
     if (res) {
+        monthdata.addProduct(currentMonthData.value.id, data.name)
         toast.success(
             'Product added succesfully !',
             `You have added ${data.name} to month ${currentMonthData.value.month}`
