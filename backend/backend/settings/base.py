@@ -4,10 +4,11 @@ from pathlib import Path
 VERSION = '2.0.0-beta.1'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','wprux!m2vd6#t-(p$e8uq+@%spdhg=a8-uqs8-h=hw9skj_5mh')
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY', 'wprux!m2vd6#t-(p$e8uq+@%spdhg=a8-uqs8-h=hw9skj_5mh')
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -32,7 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -111,12 +112,14 @@ USE_TZ = True
 
 # Manifest Loader
 # https://pypi.org/project/django-manifest-loader/
-# Pipeline for Vue's app.js/chunk-vendors 
+# Pipeline for Vue's app.js/chunk-vendors
 
 MANIFEST_LOADER = {
-    'output_dir': None,  # where webpack outputs to, if not set, will search in STATICFILES_DIRS for the manifest. 
+    # where webpack outputs to, if not set, will search in STATICFILES_DIRS for the manifest.
+    'output_dir': None,
     'manifest_file': 'dj-manifest.json',  # name of your manifest file
-    'cache': False,  # recommended True for production, requires a server restart to pick up new values from the manifest.
+    # recommended True for production, requires a server restart to pick up new values from the manifest.
+    'cache': False,
 }
 
 # Static files (CSS, JavaScript, Images)
