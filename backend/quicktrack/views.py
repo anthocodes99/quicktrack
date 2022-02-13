@@ -20,13 +20,8 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-def index_view(request, *args, **kwargs):
-    """
-    Deploys frontend(vue) via django-manifest-loader
-    """
-    return render(request, 'frontend/index.html')
-
 # rest framework stuffs
+
 
 class AccountSale(generics.ListCreateAPIView):
     """
@@ -65,10 +60,12 @@ class AccountSale(generics.ListCreateAPIView):
         if account.owner != self.request.user:
             self.permission_denied(self.request)
         serializer.save(account=account)
-        amount = serializer.validated_data['unit_price'] * serializer.validated_data['quantity']
-        account.hutang+=amount
+        amount = serializer.validated_data['unit_price'] * \
+            serializer.validated_data['quantity']
+        account.hutang += amount
         account.save()
         # print(f'SaleAccount/perform_create() -- amount : {amount}')
+
 
 class GetCurrUser(APIView):
     """
@@ -79,10 +76,12 @@ class GetCurrUser(APIView):
 
     def get(self, request, format=None):
         content = {
-            'user': request.user.username,  # `django.contrib.auth.User` instance.
+            # `django.contrib.auth.User` instance.
+            'user': request.user.username,
             'auth': request.auth,  # None
         }
         return Response(content)
+
 
 class AccountList(generics.ListCreateAPIView):
     """
@@ -99,6 +98,7 @@ class AccountList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated, IsOwner]
@@ -111,7 +111,8 @@ class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         # !! MODIFICATION !!
         # self.perform_update for this view returns history
@@ -142,13 +143,15 @@ class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
         if serializer.validated_data.get('hutang', None) is not None:
             # serializer's instance is account's detail current view(pk)
             account = serializer.instance
-            prev_hutang = account.hutang # instance's hutang before .save()
+            prev_hutang = account.hutang  # instance's hutang before .save()
             diff = serializer.validated_data['hutang'] - prev_hutang
             # print('prev_hutang: ', prev_hutang, '| diff: ', diff)
-            history = HistoryStack.objects.create(account=account, mutation=diff)
-            history.save() # creates a mutation
+            history = HistoryStack.objects.create(
+                account=account, mutation=diff)
+            history.save()  # creates a mutation
         serializer.save()
         return history
+
 
 class AccountMerge(APIView):
     """
@@ -192,6 +195,7 @@ class AccountMerge(APIView):
 
         # return 201 created
         return Response({'detail': 'Successfully merged account.'}, status=status.HTTP_201_CREATED)
+
 
 class ListAccountHistory(APIView):
     """

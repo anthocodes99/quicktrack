@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'accounts',
 
     # third party
-    'manifest_loader',
     'rest_framework',
 
     'django.contrib.admin',
@@ -110,26 +109,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Manifest Loader
-# https://pypi.org/project/django-manifest-loader/
-# Pipeline for Vue's app.js/chunk-vendors
-
-MANIFEST_LOADER = {
-    # where webpack outputs to, if not set, will search in STATICFILES_DIRS for the manifest.
-    'output_dir': None,
-    'manifest_file': 'dj-manifest.json',  # name of your manifest file
-    # recommended True for production, requires a server restart to pick up new values from the manifest.
-    'cache': False,
-}
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+STATIC_URL = '/'
 
 # Vue's staticfiles
 
@@ -138,12 +125,13 @@ STATIC_URL = '/static/'
 #     BASE_DIR / "static",
 # ]
 
-MEDIA_URL = '/img/'
+MEDIA_URL = None
 
 MEDIA_ROOT = [
-    os.path.join(BASE_DIR, 'dist/img'),
+    # os.path.join(BASE_DIR, 'dist/img'),
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dist/static'),
+    os.path.join(BASE_DIR, 'dist'),
+    # os.path.join(BASE_DIR, 'dist/static'),
 ]
