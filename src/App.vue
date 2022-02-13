@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import Toast from './components/TheToast.vue'
 import TheProgressBar from './components/TheProgressBar.vue'
+import ReloadPrompt from './components/ReloadPrompt.vue';
 </script>
 
 <template>
     <TheProgressBar />
     <router-view></router-view>
     <Toast />
+    <ReloadPrompt />
 </template>
 
 <style>
