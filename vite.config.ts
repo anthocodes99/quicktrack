@@ -34,12 +34,12 @@ const pwaOptions: Partial<VitePWAOptions> = {
     //     // msTileImage: 'static/icons/msapplication-icon-144x144.png',
     // },
     // manifestPath: 'static/manifest.json',
-    // workboxPluginMode: 'GenerateSW',
-    // workboxOptions: {
-    //     // navigateFallback: '/index.html',
-    //     precacheManifestFilename:
-    //         './static/js/precache-manifest.[manifestHash].js',
-    // },
+    strategies: 'generateSW',
+    workbox: {
+        navigateFallback: null,
+        // precacheManifestFilename:
+        // './static/js/precache-manifest.[manifestHash].js',
+    },
 }
 
 // https://vitejs.dev/config/
