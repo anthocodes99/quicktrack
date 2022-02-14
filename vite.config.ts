@@ -53,6 +53,7 @@ export default defineConfig({
             '/api': 'http://localhost:5000',
             '/accounts/me': 'http://localhost:5000',
             '/accounts/login': 'http://localhost:5000',
+            '/accounts/logout': 'http://localhost:5000',
         },
     },
 })
