@@ -15,11 +15,13 @@ import RuncitPreviousBalances from '../components/Runcitworks/RuncitPreviousBala
 import RuncitCurrentBalance from '../components/Runcitworks/RuncitCurrentBalance.vue'
 import RuncitCashFlow from '../components/Runcitworks/RuncitCashFlow.vue'
 import RuncitSetup from '../components/Runcitworks/RuncitSetup.vue'
+import { useQuicktrackStore } from '../store/quicktrack'
 
 // Composables
 const toast = useToast()
 const progressBar = useProgressBar()
 const monthdataStore = useMonthdataStore()
+const quicktrack = useQuicktrackStore()
 
 // Template refs
 const monthdatas = computed(() => monthdataStore.monthdatas)
@@ -60,8 +62,11 @@ watch(monthChosen, async (newMonth) => {
 progressBar.initProgress(30)
 onMounted(async () => {
     progressBar.addProgress(30)
-    if (monthdatas.value.length == 0) {
+    if (monthdatas.value.length === 0) {
         await monthdataStore.initMontdatas()
+    }
+    if (quicktrack.accounts.length === 0) {
+        await quicktrack.initAccounts()
     }
 
     // In case of a new user(with no monthdatas)
