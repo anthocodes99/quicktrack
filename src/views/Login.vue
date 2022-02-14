@@ -22,6 +22,7 @@ const login = async function (event) {
         },
     }
     let res
+    //TODO: Use destructureAxios
     try {
         res = await axios.post('/accounts/login', data, options)
     } catch (err) {
@@ -32,6 +33,7 @@ const login = async function (event) {
         }
     }
     // if succeeds
+    //FIXME: login to provide new CSRFToken.
     store.$patch({
         username: res.data.username,
         isLoggedIn: true,
