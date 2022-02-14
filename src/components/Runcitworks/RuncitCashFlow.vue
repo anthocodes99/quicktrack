@@ -9,6 +9,7 @@ import { destructureAxios } from '../../utils/utils'
 import axios from 'axios'
 import { useStore } from '../../store'
 import { useMonthdataStore } from '../../store/monthdata'
+import { useQuicktrackStore } from '../../store/quicktrack'
 
 interface Props {
     currentMonthData: Monthdata
@@ -28,6 +29,7 @@ const store = useStore()
 const monthdata = useMonthdataStore()
 const toast = useToast()
 const runcitworks = useRuncitworks(currentMonthData)
+const quicktrack = useQuicktrackStore()
 
 // local variables
 
@@ -83,7 +85,7 @@ const cashBalance = computed(() => {
 })
 
 const totalHutang = computed(() => {
-    return 0
+    return quicktrack.accounts.map(acc => acc.hutang).reduce((acc,curr) => acc + curr,0)
 })
 
 const cashInHand = computed(() => cashBalance.value - totalHutang.value)
