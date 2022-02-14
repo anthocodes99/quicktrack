@@ -43,8 +43,10 @@ const addHutang = async function (event) {
 
     if (res) {
         account!.hutang += parseFloat(amount)
-        toast.success('Hutang Added!', 'Hutang added successfully.')
+        return toast.success('Hutang Added!', 'Hutang added successfully.')
     }
+    // else
+    toast.error('Error!', 'Did not succesffully add Hutang.')
 }
 </script>
 
