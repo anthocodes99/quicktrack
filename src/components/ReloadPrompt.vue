@@ -13,10 +13,10 @@ const close = async () => {
 
 console.log({ offlineReady }, { needRefresh })
 
-if (offlineReady) {
+if (offlineReady.value) {
     toast.info('App Ready', 'App is ready to work offline')
 }
-if (needRefresh) {
+if (needRefresh.value) {
     const buttons = [
         {
             btnText: 'Update',
