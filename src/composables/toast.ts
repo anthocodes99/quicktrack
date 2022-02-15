@@ -51,7 +51,8 @@ function _createToast(
     title: string,
     message: string,
     status: Status,
-    buttons: ToastButton[]
+    buttons: ToastButton[],
+    timeout: number
 ) {
     const id = uuidv4()
     const close = function () {
@@ -77,16 +78,26 @@ function _createToast(
     // toast.destroy()
     setTimeout(() => {
         _destroy(id)
-    }, 5000)
+    }, timeout)
     return toast
 }
 
-function info(title: string, message: string, buttons: ToastButton[] = []) {
-    _createToast(title, message, Status.Info, buttons)
+function info(
+    title: string,
+    message: string,
+    buttons: ToastButton[] = [],
+    timeout: number = 5000
+) {
+    _createToast(title, message, Status.Info, buttons, timeout)
 }
 
-function warning(title: string, message: string, buttons: ToastButton[] = []) {
-    _createToast(title, message, Status.Warning, buttons)
+function warning(
+    title: string,
+    message: string,
+    buttons: ToastButton[] = [],
+    timeout: number = 5000
+) {
+    _createToast(title, message, Status.Warning, buttons, timeout)
 }
 
 /**
@@ -94,12 +105,22 @@ function warning(title: string, message: string, buttons: ToastButton[] = []) {
  * @param title Title of the Toast
  * @param message Message for the Toast
  */
-function success(title: string, message: string, buttons: ToastButton[] = []) {
-    _createToast(title, message, Status.Success, buttons)
+function success(
+    title: string,
+    message: string,
+    buttons: ToastButton[] = [],
+    timeout: number = 5000
+) {
+    _createToast(title, message, Status.Success, buttons, timeout)
 }
 
-function error(title: string, message: string, buttons: ToastButton[] = []) {
-    _createToast(title, message, Status.Danger, buttons)
+function error(
+    title: string,
+    message: string,
+    buttons: ToastButton[] = [],
+    timeout: number = 5000
+) {
+    _createToast(title, message, Status.Danger, buttons, timeout)
 }
 
 function clearToasts() {
