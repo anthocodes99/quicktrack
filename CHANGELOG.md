@@ -1,3 +1,34 @@
+# 3.0.0-dev.3
+
+Prompt for reloading the page upon new update is now fancier. Fixed some bugs along the way.
+
+## Features
+
+feat: Reload Prompt now shows update toast for 20 seconds (b8ba0cc8)
+feat: toast.ts now supports custom timeout (2279aa9a)
+feat: Reload Prompt now uses Toast (2a863349)
+feat: toast.ts is now 0.2.0 (84cc4ac7)
+feat: added Username and Logout to Navbar (842f8b96)
+feat: Runcitworks to initialize accounts upon visit (7befdc64)
+feat: Quicktrack Main to initialzie monthdata upon visit (b21f862a)
+
+## Fixes
+
+fix: ReloadPrompt offlineReady and needRefresh are refs (b0f5d502)
+fix: Adding Hutang does not pop a toast upon error. (6e22a095)
+fix: Runcit Cash Flow now calculates Quicktrack (e4419cc7)
+
+## Styles
+
+style: removed little buttons next to input boxes (ec4aa044)
+style: removed commented-out code (34ef0bd2)
+style: added types for pwa-register/vue (a96e39a4)
+
+## Build
+
+build: made package private (d62a9f8d)
+build: updated pwaOptions (531a6f28)
+
 # 3.0.0-dev.2
 
 Quicktrack is now deployed to ``! You can now use the most cutting edge version of Quicktrack.
