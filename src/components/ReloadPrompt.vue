@@ -27,7 +27,8 @@ if (needRefresh.value) {
     toast.info(
         'New Update Available',
         'Click on Reload button to Update.',
-        buttons
+        buttons,
+        20000
     )
 }
 </script>
