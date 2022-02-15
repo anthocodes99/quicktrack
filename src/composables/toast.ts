@@ -1,13 +1,20 @@
 import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
-interface toast {
+interface Toast {
     id: string
     title: string
     message: string
     status: Status
+    buttons: ToastButton[]
     opacity: number
     close: () => void
+}
+
+interface ToastButton {
+    btnText: string
+    btnStatus: ToastButtonColor
+    btnCb: () => void
 }
 
 export enum Status {
@@ -17,7 +24,14 @@ export enum Status {
     Success = 'text-success',
 }
 
-const toasts = ref<toast[]>([])
+export enum ToastButtonColor {
+    Info = 'btn-primary',
+    Warning = 'btn-warning',
+    Danger = 'btn-danger',
+    Success = 'btn-sucess',
+}
+
+const toasts = ref<Toast[]>([])
 
 function _destroy(id: string) {
     const toast = toasts.value.find((toast) => toast.id == id)
@@ -29,7 +43,16 @@ function _destroy(id: string) {
     }, 500)
 }
 
-function _createToast(title: string, message: string, status: Status) {
+function makeButton(title: string, status: ToastButtonColor, cb: () => void) {
+    return { btnText: title, btnStatus: status, btnCb: cb }
+}
+
+function _createToast(
+    title: string,
+    message: string,
+    status: Status,
+    buttons: ToastButton[]
+) {
     const id = uuidv4()
     const close = function () {
         _destroy(id)
@@ -39,6 +62,7 @@ function _createToast(title: string, message: string, status: Status) {
         title,
         message,
         status,
+        buttons,
         opacity: 0,
         close,
     }
@@ -57,12 +81,12 @@ function _createToast(title: string, message: string, status: Status) {
     return toast
 }
 
-function info(title: string, message: string) {
-    _createToast(title, message, Status.Info)
+function info(title: string, message: string, buttons: ToastButton[] = []) {
+    _createToast(title, message, Status.Info, buttons)
 }
 
-function warning(title: string, message: string) {
-    _createToast(title, message, Status.Warning)
+function warning(title: string, message: string, buttons: ToastButton[] = []) {
+    _createToast(title, message, Status.Warning, buttons)
 }
 
 /**
@@ -70,12 +94,12 @@ function warning(title: string, message: string) {
  * @param title Title of the Toast
  * @param message Message for the Toast
  */
-function success(title: string, message: string) {
-    _createToast(title, message, Status.Success)
+function success(title: string, message: string, buttons: ToastButton[] = []) {
+    _createToast(title, message, Status.Success, buttons)
 }
 
-function error(title: string, message: string) {
-    _createToast(title, message, Status.Danger)
+function error(title: string, message: string, buttons: ToastButton[] = []) {
+    _createToast(title, message, Status.Danger, buttons)
 }
 
 function clearToasts() {
@@ -94,6 +118,7 @@ export function useToast() {
         warning,
         success,
         error,
+        makeButton,
         clearToasts,
     }
 }

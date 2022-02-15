@@ -2,9 +2,15 @@
 import ToastPopUp from '../primitives/ToastPopUp.vue'
 import { useToast } from '../composables/toast'
 import { computed } from 'vue'
+import ToastButton from '../primitives/ToastButton.vue'
 
 const toast = useToast()
 const toasts = computed(() => toast.state.toasts.value)
+const runCallback = function (e: () => void) {
+    if (typeof e === 'function') return e()
+    // else
+    console.error('Toast callback is not a function!', e)
+}
 </script>
 
 <template>
@@ -17,18 +23,18 @@ const toasts = computed(() => toast.state.toasts.value)
                 :opacity="toast.opacity"
                 @close="toast.close"
             >
-                <div class="mt-2 pt-2 border-top">
-                    <button type="button" class="btn btn-primary btn-sm">
-                        Take action
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-secondary btn-sm"
-                        data-bs-dismiss="toast"
-                    >
-                        Close
-                    </button>
-                </div>
+                <template v-if="toast.buttons.length !== 0">
+                    <div class="mt-2 pt-2 border-top">
+                        <template v-for="button in toast.buttons">
+                            <ToastButton
+                                :btnText="button.btnText"
+                                :btnStatus="button.btnStatus"
+                                :btnCb="button.btnCb"
+                                @btnClick="runCallback"
+                            />
+                        </template>
+                    </div>
+                </template>
             </ToastPopUp>
         </template>
     </div>
