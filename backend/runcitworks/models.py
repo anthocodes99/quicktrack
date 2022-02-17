@@ -9,6 +9,7 @@ from quicktrack import models as qtmodel
 
 # Create your models here.
 
+
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
@@ -67,9 +68,10 @@ class Sale(models.Model):
     date = models.DateField()
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     unit_price = models.DecimalField(default=0, max_digits=9, decimal_places=4)
-    quantity = models.PositiveIntegerField(default=1, validators=[MaxValueValidator(10000000)])
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MaxValueValidator(10000000)])
     account = models.ForeignKey(
-        qtmodel.Account, on_delete=models.SET_NULL, null=True, blank=True)
+        qtmodel.Account, related_name='sales', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_monthdata(self):
         return self.monthdata
@@ -82,6 +84,7 @@ class Sale(models.Model):
         if self.date.month != self.monthdata.month.month:
             raise ValidationError(
                 _('Date for sale can only be within the current month.'))
+
 
 class Purchase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -90,7 +93,8 @@ class Purchase(models.Model):
     date = models.DateField()
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     unit_price = models.DecimalField(default=0, max_digits=9, decimal_places=4)
-    quantity = models.PositiveIntegerField(default=1, validators=[MaxValueValidator(10000000)])
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MaxValueValidator(10000000)])
 
     def get_monthdata(self):
         return self.monthdata
@@ -104,6 +108,7 @@ class Purchase(models.Model):
             raise ValidationError(
                 _('Date for sale can only be within the current month.'))
 
+
 class Expense(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     monthdata = models.ForeignKey(
@@ -111,7 +116,8 @@ class Expense(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=128)
     unit_price = models.DecimalField(default=0, max_digits=9, decimal_places=4)
-    quantity = models.PositiveIntegerField(default=1, validators=[MaxValueValidator(10000000)])
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MaxValueValidator(10000000)])
     # trying something new; snapshot of when the object is created.
     # to be implemented on purchase and sales
     created = models.DateTimeField(auto_now_add=True)
@@ -124,13 +130,15 @@ class Expense(models.Model):
             raise ValidationError(
                 _('Date for expense can only be within the current month.'))
 
+
 class PreviousBalance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     monthdata = models.ForeignKey(
         MonthData, related_name='previous_balances', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     unit_price = models.DecimalField(default=0, max_digits=9, decimal_places=4)
-    quantity = models.PositiveIntegerField(default=1, validators=[MaxValueValidator(10000000)])
+    quantity = models.PositiveIntegerField(
+        default=1, validators=[MaxValueValidator(10000000)])
 
     def get_monthdata(self):
         return self.monthdata
