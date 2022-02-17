@@ -14,7 +14,7 @@ from runcitworks.models import Sale
 
 from .models import Account, HistoryStack
 from .permissions import IsOwner, AccountSaleIsOwner
-from .serializers import AccountSerializer, HistoryStackSerializer
+from .serializers import AccountSerializer, AccountSaleSerializer, HistoryStackSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -90,7 +90,7 @@ class AccountList(generics.ListCreateAPIView):
     """
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    serializer_class = AccountSerializer
+    serializer_class = AccountSaleSerializer
 
     def get_queryset(self):
         return self.request.user.accounts.all()
