@@ -12,13 +12,15 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'user']
         read_only_fields = ['user']
 
+
 class SaleSerializer(serializers.ModelSerializer):
     product = serializers.CharField(source='product.name')
     account = serializers.CharField(source='account.username', read_only=True)
 
     class Meta:
         model = Sale
-        fields = ['id', 'monthdata', 'date', 'product', 'unit_price', 'quantity', 'account']
+        fields = ['id', 'monthdata', 'date', 'product',
+                  'unit_price', 'quantity', 'account']
         read_only_fields = ['account']
 
     def validate(self, data):
@@ -28,7 +30,8 @@ class SaleSerializer(serializers.ModelSerializer):
         monthdata = data.get('monthdata')
         date = data.get('date')
         if monthdata.month.month != date.month:
-            context = {'date': 'Date for sale can only be within the current month.'}
+            context = {
+                'date': 'Date for sale can only be within the current month.'}
             raise serializers.ValidationError(context)
         return data
 
@@ -47,15 +50,18 @@ class SaleSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError(
             {
                 'product': f'Invalid product.\'{curr_product_name}\' does'
-                         ' not exist within this month.'
+                ' not exist within this month.'
             }
         )
 
+
 class PurchaseSerializer(serializers.ModelSerializer):
     product = serializers.CharField(source='product.name')
+
     class Meta:
         model = Purchase
-        fields = ['id', 'monthdata', 'date', 'product', 'unit_price', 'quantity']
+        fields = ['id', 'monthdata', 'date',
+                  'product', 'unit_price', 'quantity']
 
     def create(self, validated_data):
         """
@@ -80,13 +86,17 @@ class PurchaseSerializer(serializers.ModelSerializer):
             f'Invalid product.\'{curr_product_name}\' does not exist within this month.'
         )
 
+
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = ['id', 'monthdata', 'date', 'description', 'unit_price', 'quantity', 'created']
+        fields = ['id', 'monthdata', 'date', 'description',
+                  'unit_price', 'quantity', 'created']
+
 
 class PreviousBalanceSerializer(serializers.ModelSerializer):
     product = serializers.CharField(source='product.name')
+
     class Meta:
         model = PreviousBalance
         fields = ['id', 'monthdata', 'product', 'unit_price', 'quantity']
@@ -105,10 +115,12 @@ class PreviousBalanceSerializer(serializers.ModelSerializer):
                 try:
                     return PreviousBalance.objects.create(**validated_data)
                 except IntegrityError:
-                    raise serializers.ValidationError('Product already exist in monthdata.')
+                    raise serializers.ValidationError(
+                        'Product already exist in monthdata.')
         raise serializers.ValidationError(
             f'Invalid product.\'{curr_product_name}\' does not exist within this month.'
         )
+
 
 class MonthDataProductsField(serializers.RelatedField):
 
@@ -125,10 +137,12 @@ class MonthDataProductsField(serializers.RelatedField):
         try:
             return self.get_queryset().get(name=data)
         except Product.DoesNotExist as error:
-            raise serializers.ValidationError(f"Invalid product {data}") from error
+            raise serializers.ValidationError(
+                f"Invalid product {data}") from error
 
     def to_representation(self, value):
         return value.name
+
 
 class MonthDataPatchSerializer(serializers.ModelSerializer):
     """
@@ -137,8 +151,10 @@ class MonthDataPatchSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = MonthData
-        fields = ['id', 'month', 'user', 'starting_modal', 'cashout', 'profit_balance']
+        fields = ['id', 'month', 'user',
+                  'starting_modal', 'cashout', 'profit_balance']
         read_only_fields = ['user', 'month']
+
 
 class MonthDataListSerializer(serializers.ModelSerializer):
     """
@@ -148,7 +164,8 @@ class MonthDataListSerializer(serializers.ModelSerializer):
     # products = MonthDataProductsField(many=True, read_only=True)
     products = MonthDataProductsField(many=True)
 
-    user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = MonthData
@@ -167,8 +184,10 @@ class MonthDataListSerializer(serializers.ModelSerializer):
 
     def validate_month(self, value):
         if value.day != 1:
-            raise serializers.ValidationError("Month must not be any other date than 1st.")
+            raise serializers.ValidationError(
+                "Month must not be any other date than 1st.")
         return value
+
 
 class MonthDataSerializer(serializers.ModelSerializer):
     products = MonthDataProductsField(many=True, read_only=True)
@@ -176,7 +195,8 @@ class MonthDataSerializer(serializers.ModelSerializer):
     purchases = PurchaseSerializer(many=True, read_only=True)
     expenses = ExpenseSerializer(many=True, read_only=True)
     previous_balances = PreviousBalanceSerializer(many=True, read_only=True)
-    user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = MonthData
@@ -196,5 +216,6 @@ class MonthDataSerializer(serializers.ModelSerializer):
 
     def validate_month(self, value):
         if value.day != 1:
-            raise serializers.ValidationError("Month must not be any other date than 1st.")
+            raise serializers.ValidationError(
+                "Month must not be any other date than 1st.")
         return value
