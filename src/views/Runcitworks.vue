@@ -228,7 +228,7 @@ onMounted(async () => {
                         aria-labelledby="nav-home-tab"
                     >
                         <RuncitPurchaseSales
-                            :curr_monthdata="currentMonthdata"
+                            :curr_monthdata="currentMonthdata!"
                         />
                     </div>
                     <div
@@ -237,7 +237,7 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-expenses-tab"
                     >
-                        <RuncitExpenses :currentMonthData="currentMonthdata" />
+                        <RuncitExpenses :currentMonthData="currentMonthdata!" />
                     </div>
                     <div
                         class="tab-pane fade"
@@ -246,7 +246,7 @@ onMounted(async () => {
                         aria-labelledby="nav-profile-tab"
                     >
                         <RuncitPreviousBalances
-                            :currentMonthData="currentMonthdata"
+                            :currentMonthData="currentMonthdata!"
                         />
                     </div>
                     <div
@@ -256,7 +256,7 @@ onMounted(async () => {
                         aria-labelledby="nav-contact-tab"
                     >
                         <RuncitCurrentBalance
-                            :currentMonthData="currentMonthdata"
+                            :currentMonthData="currentMonthdata!"
                         />
                     </div>
                     <div
@@ -265,7 +265,7 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-contact-tab"
                     >
-                        <RuncitCashFlow :currentMonthData="currentMonthdata" />
+                        <RuncitCashFlow :currentMonthData="currentMonthdata!" />
                     </div>
                     <div
                         class="tab-pane fade"
@@ -273,7 +273,10 @@ onMounted(async () => {
                         role="tabpanel"
                         aria-labelledby="nav-contact-tab"
                     >
-                        <RuncitSetup :currentMonthData="currentMonthdata" />
+                        <RuncitSetup
+                            :currentMonthData="currentMonthdata!"
+                            :userProducts="monthdataStore.userProducts"
+                        />
                     </div>
                 </div>
             </template>

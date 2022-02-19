@@ -1,20 +1,16 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { computed, onBeforeMount, ref, toRefs } from 'vue'
+import { computed, ref, toRefs } from 'vue'
 import { useToast } from '../../composables/toast'
-import { Monthdata } from '../../models/monthdata'
+import { Monthdata, Product } from '../../models/monthdata'
 import { useStore } from '../../store'
 import { useMonthdataStore } from '../../store/monthdata'
 import { destructureAxios } from '../../utils/utils'
 
 interface Props {
     currentMonthData: Monthdata
+    userProducts: Product[]
 }
-
-interface Product {
-    name: string
-}
-
 const props = defineProps<Props>()
 const { currentMonthData } = toRefs(props)
 
@@ -31,7 +27,6 @@ const config = {
 }
 
 // template refs
-const userProducts = ref<Product[]>([])
 const selectProduct = ref<Product | null>(null)
 
 // computed properties
@@ -74,6 +69,9 @@ const registerProduct = async function (event) {
         axios.post(`/api/v1/products`, data, config)
     )
     if (res) {
+        monthdata.$patch({
+            userProducts: [...monthdata.userProducts, res.data],
+        })
         toast.success(
             'Product Registered.',
             `You have registered a product with name ${data.name}`
@@ -88,20 +86,6 @@ const registerProduct = async function (event) {
 }
 
 // lifecycle hooks
-onBeforeMount(async () => {
-    const [res, err] = await destructureAxios(
-        axios.get('/api/v1/products', config)
-    )
-    if (res) {
-        userProducts.value = res.data
-        return
-    }
-    // else
-    toast.error(
-        'Did not succesfully retrieve products!',
-        'Please check your internet connection.'
-    )
-})
 </script>
 
 <template>

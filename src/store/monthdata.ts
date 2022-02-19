@@ -14,6 +14,7 @@ import {
     Monthdata,
     Transaction,
     TransactionType,
+    Product,
 } from '../models/monthdata'
 
 export const useMonthdataStore = defineStore('monthdata', () => {
@@ -30,6 +31,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
 
     // states
     const monthdatas = ref<Monthdata[]>([])
+    const userProducts = ref<Product[]>([])
     const isInitialized = ref(false)
 
     // local functions
@@ -119,6 +121,21 @@ export const useMonthdataStore = defineStore('monthdata', () => {
         )
     }
 
+    async function initUserProducts() {
+        const [res, err] = await destructureAxios(
+            axios.get('/api/v1/products', config)
+        )
+        if (res) {
+            userProducts.value = res.data
+            return
+        }
+        // else
+        toast.error(
+            'Did not succesfully retrieve products!',
+            'Please check your internet connection.'
+        )
+    }
+
     async function initMontdatas() {
         const [res, error] = await destructureAxios(
             axios.get('/api/v1/monthdatas', config)
@@ -127,11 +144,14 @@ export const useMonthdataStore = defineStore('monthdata', () => {
             monthdatas.value = res.data
             // In case of a new user.
             if (res.data[0] === undefined) return
+            // initialize the first monthdata of the list(for better intergration)
             const [mdres, mderr] = await destructureAxios(
                 axios.get(`/api/v1/monthdatas/${res.data[0].id}`, config)
             )
             if (mdres) {
                 updateMonthdata(mdres.data.id, numerifyMonthdata(mdres.data))
+                // initialize User Products
+                await initUserProducts()
                 isInitialized.value = true
                 return
             }
@@ -159,6 +179,7 @@ export const useMonthdataStore = defineStore('monthdata', () => {
 
     return {
         monthdatas,
+        userProducts,
         isInitialized,
         addTransaction,
         deleteTransaction,
