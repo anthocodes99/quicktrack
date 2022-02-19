@@ -62,3 +62,7 @@ export enum TransactionType {
     Expense = 'expenses',
     PreviousBalance = 'previousbalances',
 }
+
+export interface Product {
+    name: string
+}
