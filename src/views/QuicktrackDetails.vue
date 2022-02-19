@@ -18,6 +18,7 @@ import { destructureAxios } from '../utils/utils'
 import { Account } from '../models/quicktrack'
 import DetailsCustomSale from '../components/Quicktrack/DetailsCustomSale.vue'
 import DetailsAddHutang from '../components/Quicktrack/DetailsAddHutang.vue'
+import DetailRecentSales from '../components/Quicktrack/DetailRecentSales.vue'
 
 const store = useStore()
 const quicktrack = useQuicktrackStore()
@@ -216,6 +217,7 @@ const submitPayment = async function (event) {
                 />
                 <DetailsAddHutang />
                 <DetailsSubmitPayment @submitPayment="submitPayment" />
+                <DetailRecentSales :account="account!" />
             </div>
         </template>
     </div>
