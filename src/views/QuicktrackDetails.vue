@@ -142,8 +142,13 @@ const submitPayment = async function (event) {
         return toast.error('Error!', 'You may not pay more than the hutang!')
     }
 
+    //FIXME: make it accurate. This is off by about 0.01
+    account.value!.hutang = parseFloat(
+        (account.value!.hutang - paymentAmount).toFixed(2)
+    )
+
     const data = {
-        hutang: (account.value!.hutang -= paymentAmount),
+        hutang: account.value!.hutang,
     }
 
     const [res, err] = await destructureAxios(
