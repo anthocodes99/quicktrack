@@ -1,3 +1,27 @@
+# 3.0.0-alpha.0
+
+Quicktrack is now in it's MVP. Merge, delete and hiding accounts to come soon.
+
+## Features
+feat(frontend): added spinner for QuicktrackMain (fd8a588)
+feat(frontend): User Products are fetched on store. (403b5a5e)
+feat(frontend): implemented Recent Sales (2badfd9a)
+feat(backend): AccountList to use AccountSaleSerializer (cf25bdab)
+feat(backend): Added AccountSaleSerializer (d3daaa2c)
+feat(backend): added related_name for Account on Sale (5f60373d)
+
+## Fixes
+fix(frontend): h2 font gets too big on desktop (5098468b)
+fix(frontend): Navbar not properly showing runcitworks and logout (2a77004b)
+fix(frontend): Floating point error on large numbers (91aaaf988)
+fix(frontend): ReloadPrompt.. not prompting (fcbfdb19)
+
+## Styles
+style(frontend): moved interface Product to models (b944b35e)
+style: updated model for Account and RawAccount (cb7b3b92)
+style(backend): code formatting (5f7f1568)
+
+
 # 3.0.0-dev.3
 
 Prompt for reloading the page upon new update is now fancier. Fixed some bugs along the way.

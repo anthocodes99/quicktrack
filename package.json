@@ -1,7 +1,7 @@
 {
   "name": "quicktrack",
   "private": true,
-  "version": "3.0.0-dev.3",
+  "version": "3.0.0-alpha.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
