@@ -44,6 +44,10 @@ small {
     color: #e94f37 !important;
 }
 
+h2 {
+    font-size: 2em;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
