@@ -40,6 +40,11 @@ const logout = async function () {
                 class="navbar-brand text-orange"
                 >Quicktrack</router-link
             >
+            <router-link
+                :to="{ name: 'Runcitworks' }"
+                class="navbar-brand text-orange"
+                >Runcitworks</router-link
+            >
             <button
                 class="navbar-toggler"
                 type="button"
@@ -52,18 +57,9 @@ const logout = async function () {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link
-                            :to="{ name: 'Runcitworks' }"
-                            class="navbar-brand text-orange"
-                            >Runcitworks</router-link
-                        >
-                    </li>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"></li>
                 </ul>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                 <span class="navbar-text">
                     {{ username }}
                     <a href="#" class="navbar-text" @click.prevent="logout()"
