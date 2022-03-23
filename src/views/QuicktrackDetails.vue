@@ -125,6 +125,8 @@ const createSale = async function (product, unitPrice, quantity, date = null) {
         if (updMonthdata && updMonthdata['sales']) {
             updMonthdata['sales'].push(res.data)
         }
+        // update the current account's sales as well
+        account.value!.recent_sales.push(res.data)
         return toast.success('Sale Added', 'Sale added succesfully!')
     }
     // else
