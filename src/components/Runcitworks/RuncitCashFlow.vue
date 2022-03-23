@@ -85,7 +85,9 @@ const cashBalance = computed(() => {
 })
 
 const totalHutang = computed(() => {
-    return quicktrack.accounts.map(acc => acc.hutang).reduce((acc,curr) => acc + curr,0)
+    return quicktrack.accounts
+        .map((acc) => acc.hutang)
+        .reduce((acc, curr) => acc + curr, 0)
 })
 
 const cashInHand = computed(() => cashBalance.value - totalHutang.value)
@@ -188,8 +190,8 @@ const updateCashOut = async function () {
 
 <template>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm">
+        <div class="row justify-content-center">
+            <div class="col-7 col-sm">
                 <table id="cash-balance" class="table text-light">
                     <thead>
                         <th colspan="2" scope="row">
@@ -251,7 +253,7 @@ const updateCashOut = async function () {
                     </tbody>
                 </table>
             </div>
-            <div class="col-sm">
+            <div class="col-7 col-sm">
                 <table class="table text-light">
                     <thead>
                         <th colspan="2" scope="col">
