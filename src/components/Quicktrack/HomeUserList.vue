@@ -40,7 +40,12 @@ const routeChange = function (id: number) {
     padding: 0.5rem;
     background-color: #021620;
     border-color: #033b57 !important;
-    border-radius: 10%;
+    border-radius: 15%;
+    transition: background-color 200ms ease-in-out;
+}
+
+.account:hover {
+    background-color: #053a55;
 }
 
 .account:hover {
