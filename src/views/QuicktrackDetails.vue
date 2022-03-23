@@ -168,7 +168,7 @@ const submitPayment = async function (event) {
 
 <template>
     <TheNavbar />
-    <div class="container-sm col-md-9 col-lg-7 border border-3">
+    <div class="container-main container-sm col-md-9 col-lg-7 border border-3">
         <template v-if="!isInitialized">
             <h1>Loading...</h1>
         </template>
@@ -228,4 +228,9 @@ const submitPayment = async function (event) {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container-main {
+    border-color: rgb(83, 83, 83) !important;
+    border-radius: 15px;
+}
+</style>
