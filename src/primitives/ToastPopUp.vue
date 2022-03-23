@@ -11,7 +11,7 @@ const props = defineProps<Props>()
 
 <template>
     <div
-        class="toast fade show"
+        class="toast fade show bg-dark text-light"
         :style="{ opacity: `${opacity}%` }"
         role="alert"
         aria-live="assertive"
