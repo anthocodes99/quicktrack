@@ -3,7 +3,7 @@ const emits = defineEmits<{ (e: 'submitPayment', event): void }>()
 </script>
 
 <template>
-    <div class="container-xxl col-xl-7 border border-2 mt-2 py-2">
+    <div class="container-xxl col-xl-7 border border-sm border-2 mt-2 py-2">
         <form @submit.prevent="$emit('submitPayment', $event)" class="row g-3">
             <h2>Payment</h2>
             <label for="submitPayment" class="form-label my-0">Payment</label>

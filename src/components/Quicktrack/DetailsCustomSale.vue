@@ -26,10 +26,10 @@ const submitSale = function (event) {
 </script>
 
 <template>
-    <div class="container-xxl border border-2 mt-2 py-1">
+    <div class="container-xxl border border-sm border-2 mt-2 py-1">
         <form action="" @submit.prevent="submitSale">
             <h2>Custom Input</h2>
-            <div class="row g-3">
+            <div class="row row-cols-1 row-cols-md-4 g-3">
                 <div class="col">
                     <label for="date">Date</label>
                     <input

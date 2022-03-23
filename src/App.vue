@@ -48,6 +48,20 @@ h2 {
     font-size: 2em;
 }
 
+/* Additional Styles */
+
+.border-sm {
+    border-radius: 8px;
+}
+
+.border-md {
+    border-radius: 24px;
+}
+
+.border-lg {
+    border-radius: 48px;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

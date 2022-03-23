@@ -51,8 +51,10 @@ const addHutang = async function (event) {
 </script>
 
 <template>
-    <div class="container-xxl container-xxl col-xl-7 border border-2 mt-2">
-        <form class="form" @submit.prevent="addHutang">
+    <div
+        class="container-xxl container-xxl col-xl-7 border border-sm border-2 mt-2"
+    >
+        <form class="form py-2" @submit.prevent="addHutang">
             <h2>Add Hutang</h2>
             <label for="amount" class="form-label">Amount</label>
             <div class="row g-3">
