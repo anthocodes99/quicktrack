@@ -33,40 +33,26 @@ const logout = async function () {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <router-link
-                :to="{ name: 'QuicktrackMain' }"
-                class="navbar-brand text-orange"
-                >Quicktrack</router-link
-            >
-            <router-link
-                :to="{ name: 'Runcitworks' }"
-                class="navbar-brand text-orange"
-                >Runcitworks</router-link
-            >
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"></li>
-                </ul>
-                <span class="navbar-text">
-                    {{ username }}
-                    <a href="#" class="navbar-text" @click.prevent="logout()"
-                        >Log out</a
-                    >
-                </span>
+            <div class="flex justify-content-start">
+                <router-link
+                    :to="{ name: 'QuicktrackMain' }"
+                    class="navbar-brand text-orange"
+                    >Quicktrack</router-link
+                >
+                <router-link
+                    :to="{ name: 'Runcitworks' }"
+                    class="navbar-brand text-orange"
+                    >Runcitworks</router-link
+                >
             </div>
+            <span class="navbar-text">
+                {{ username }}
+                <a href="#" class="navbar-text" @click.prevent="logout()"
+                    >Log out</a
+                >
+            </span>
         </div>
     </nav>
 </template>
