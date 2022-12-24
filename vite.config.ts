@@ -50,10 +50,29 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '/api': 'http://localhost:5000',
-            '/accounts/me': 'http://localhost:5000',
-            '/accounts/login': 'http://localhost:5000',
-            '/accounts/logout': 'http://localhost:5000',
+            '/api': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+            },
+            '/accounts/me': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+            },
+            '/accounts/login': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+            },
+            '/accounts/logout': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+            },
+            // '/accounts/me': 'http://localhost:5000',
+            // '/accounts/login': 'http://localhost:5000',
+            // '/accounts/logout': 'http://localhost:5000',
         },
     },
 })
