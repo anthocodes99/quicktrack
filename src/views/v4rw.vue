@@ -45,22 +45,16 @@ const runcitPurchaseList = [
             <span class="text-[#3F88C5]">antho</span>
         </div>
     </nav>
-    <div class="mx-auto max-w-lg md:max-w-xl lg:max-w-7xl">
-        <NewNavbar
-            class="hidden md:block fixed top-0 pt-4 px-4 xl:w-[15rem] md:w-[11rem]"
-        />
-        <main class="pl-[rem] mt-4">
-            <div class="max-w-3xl mx-auto">
-                <h3 class="text-3xl text-white">Sales</h3>
-                <RuncitSaleList :saleList="runcitSaleList" />
-                <h3 class="text-3xl text-white mt-12">Purchases</h3>
-                <RuncitPurchaseList :purchaseList="runcitPurchaseList" />
-            </div>
+    <div class="flex mx-auto md:max-w-xl lg:max-w-7xl gap-8">
+        <NewNavbar class="hidden md:block" />
+        <main class="flex-auto mt-4">
+            <h3 class="text-3xl text-white">Sales</h3>
+            <RuncitSaleList :saleList="runcitSaleList" />
+            <h3 class="text-3xl text-white mt-12">Purchases</h3>
+            <RuncitPurchaseList :purchaseList="runcitPurchaseList" />
         </main>
-        <aside
-            class="hidden 2xl:block fixed top-0 right-[max(0px,calc(50%-45rem))] w-[18rem] pt-4"
-        >
-            <p class="text-4xl text-white">aside</p>
+        <aside class="hidden lg:block border-2 mt-4 w-[18.5rem]">
+            <p class="text-3xl text-white">stuff</p>
         </aside>
     </div>
 </template>
