@@ -8,6 +8,7 @@ import Home from '../views/Home.vue'
 import QuicktrackMain from '../views/QuicktrackMain.vue'
 import QuicktrackDetails from '../views/QuicktrackDetails.vue'
 import Runcitworks from '../views/Runcitworks.vue'
+import v4rw from '../views/v4rw.vue'
 import ToastView from '../views/ToastView.vue'
 import Login from '../views/Login.vue'
 
@@ -30,6 +31,12 @@ const router = createRouter({
             path: '/runcitworks',
             name: 'Runcitworks',
             component: Runcitworks,
+            meta: { req_auth: true },
+        },
+        {
+            path: '/v4rw',
+            name: 'v4rw',
+            component: v4rw,
             meta: { req_auth: true },
         },
         { path: '/login', name: 'Login', component: Login },
