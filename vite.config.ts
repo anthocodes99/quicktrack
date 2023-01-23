@@ -52,22 +52,22 @@ export default defineConfig({
         proxy: {
             '/api': {
                 target: 'http://localhost:5000',
-                changeOrigin: true,
+                changeOrigin: false,
                 secure: false,
             },
             '/accounts/me': {
                 target: 'http://localhost:5000',
-                changeOrigin: true,
+                changeOrigin: false,
                 secure: false,
             },
             '/accounts/login': {
                 target: 'http://localhost:5000',
-                changeOrigin: true,
+                changeOrigin: false,
                 secure: false,
             },
             '/accounts/logout': {
                 target: 'http://localhost:5000',
-                changeOrigin: true,
+                changeOrigin: false,
                 secure: false,
             },
             // '/accounts/me': 'http://localhost:5000',
