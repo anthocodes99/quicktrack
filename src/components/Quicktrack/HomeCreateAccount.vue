@@ -5,6 +5,9 @@ import { useStore } from '../../store'
 import { useQuicktrackStore } from '../../store/quicktrack'
 import { destructureAxios } from '../../utils/utils'
 
+import BaseInput from '../../primitives/BaseInput.vue'
+import BaseButton from '../../primitives/BaseButton.vue'
+
 const store = useStore()
 const quicktrack = useQuicktrackStore()
 const toast = useToast()
@@ -39,33 +42,28 @@ const createUser = async function (event) {
 </script>
 
 <template>
-    <div class="container col-lg-5 col-md-7 col-sm-12 border border-2 mt-5 p-2">
-        <h2>Add User</h2>
-        <form class="row g-3" @submit.prevent="createUser">
-            <div class="col-md-6">
-                <label for="username" class="form-label">Username</label>
-                <input
-                    class="form-control"
+    <div class="px-2">
+        <h2 class="text-2xl">Create Account</h2>
+        <form class="pt-2 px-2" @submit.prevent="createUser">
+            <div class="">
+                <label for="username" class="text-gray-400">
+                    Account Name
+                </label>
+                <BaseInput
                     type="text"
-                    placeholder="Djlans"
+                    placeholder="Cinnamoroll"
                     name="username"
                 />
             </div>
-            <div class="col-md-4">
-                <label for="hutang" class="form-label">Starting Hutang</label>
-                <input
-                    class="form-control"
-                    id="hutang"
-                    type="number"
-                    placeholder="10"
-                    name="hutang"
-                />
+            <div class="mt-4">
+                <label for="hutang" class="text-gray-400">
+                    Initial Hutang
+                </label>
+                <BaseInput type="number" value="0" name="hutang" />
             </div>
-            <div class="d-flex align-items-end col-md-2">
-                <button class="btn btn-outline-success" style="width: 100%">
-                    Create
-                </button>
-            </div>
+            <BaseButton class="mt-8" type="submit"
+                ><span class="font-semibold">Create Account</span></BaseButton
+            >
         </form>
     </div>
 </template>

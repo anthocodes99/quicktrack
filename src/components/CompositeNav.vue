@@ -5,7 +5,7 @@ import TheMobileTopNav from '../components/TheMobileTopNav.vue'
 
 <template>
     <TheMobileTopNav />
-    <div class="flex mx-auto md:max-w-xl lg:max-w-7xl gap-8 px-4">
+    <div class="flex mx-auto md:max-w-xl lg:max-w-7xl gap-8">
         <NewNavbar class="hidden md:block" />
         <slot></slot>
     </div>
