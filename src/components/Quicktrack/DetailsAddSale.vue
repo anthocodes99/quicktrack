@@ -8,6 +8,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const selectedProduct = ref('')
+const dateInput = ref(new Date().toISOString().split('T')[0])
 </script>
 
 <template>
@@ -49,9 +50,10 @@ const selectedProduct = ref('')
                 class="block mt-2 p-2 rounded w-48"
                 type="date"
                 name="date"
-                :value="new Date().toISOString().split('T')[0]"
-                id=""
+                id="date"
+                v-model="dateInput"
             />
+            <!-- :value="new Date().toISOString().split('T')[0]" -->
         </div>
         <div class="pt-4">
             <label class="text-gray-400 text-lg" for="unitprice"
