@@ -194,16 +194,11 @@ const submitPayment = async function (event) {
                         RM {{ account!.hutang.toFixed(2) }}
                     </h2>
 
-                    <!-- Add Sale Form -->
-                    <DetailsAddSale
-                        class="pt-8"
-                        :products="currentMonthdataProducts"
-                        @submit.prevent="createSale"
-                    />
-
                     <!-- Runcitworks Monthdata Selector -->
-                    <div class="container">
-                        <label class="form-label fs-4" for="monthdata-selector"
+                    <div class="pt-8">
+                        <label
+                            class="text-lg text-gray-400"
+                            for="monthdata-selector"
                             >Monthdata</label
                         >
                         <div v-if="monthdatas.length === 0">
@@ -217,7 +212,7 @@ const submitPayment = async function (event) {
                         <select
                             v-else
                             v-model="monthdataId"
-                            class="form-select"
+                            class="group relative border rounded-md py-2 px-4 flex text-center items-center mt-2 w-full"
                             id="monthdata-selector"
                         >
                             <option
@@ -230,9 +225,21 @@ const submitPayment = async function (event) {
                             </option>
                         </select>
 
-                        <!-- <DetailsAddHutang />
-                        <DetailsSubmitPayment @submitPayment="submitPayment" /> -->
-                        <DetailRecentSales :account="account!" />
+                        <!-- Add Sale Form -->
+                        <DetailsAddSale
+                            class="mt-8 bg-[#1d1f21] p-4 rounded-lg border border-[#4b5457]"
+                            :products="currentMonthdataProducts"
+                            @submit.prevent="createSale"
+                        />
+
+                        <!-- Submit Payment Form -->
+                        <DetailsSubmitPayment
+                            class="mt-8"
+                            @submitPayment="submitPayment"
+                        />
+
+                        <!-- Recent Sales List -->
+                        <DetailRecentSales class="pt-8" :account="account!" />
                     </div>
                 </div>
             </template>
