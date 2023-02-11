@@ -12,6 +12,14 @@ import v4rw from '../views/v4rw.vue'
 import ToastView from '../views/ToastView.vue'
 import Login from '../views/Login.vue'
 
+import RuncitworksSales from '../views/Runcitworks/RuncitworksSales.vue'
+import RuncitworksPurchases from '../views/Runcitworks/RuncitworksPurchases.vue'
+import RuncitworksExpenses from '../views/Runcitworks/RuncitworksExpenses.vue'
+import RuncitworksCurrentBalance from '../views/Runcitworks/RuncitworksCurrentBalance.vue'
+import RuncitworksCashFlow from '../views/Runcitworks/RuncitworksCashFlow.vue'
+import RuncitworksSetup from '../views/Runcitworks/RuncitworksSetup.vue'
+import RuncitworksDashboard from '../views/Runcitworks/RuncitworksDashboard.vue'
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -30,14 +38,47 @@ const router = createRouter({
         {
             path: '/runcitworks',
             name: 'Runcitworks',
-            component: Runcitworks,
-            meta: { req_auth: true },
-        },
-        {
-            path: '/v4rw',
-            name: 'v4rw',
             component: v4rw,
             meta: { req_auth: true },
+            children: [
+                // nested routes
+                // https://router.vuejs.org/guide/essentials/nested-routes.html
+                {
+                    path: '',
+                    name: 'rw-dashboard',
+                    component: RuncitworksDashboard,
+                },
+                {
+                    path: 'sales',
+                    name: 'rw-sales',
+                    component: RuncitworksSales,
+                },
+                {
+                    path: 'purchases',
+                    name: 'rw-purchases',
+                    component: RuncitworksPurchases,
+                },
+                {
+                    path: 'expenses',
+                    name: 'rw-expenses',
+                    component: RuncitworksExpenses,
+                },
+                {
+                    path: 'balance',
+                    name: 'rw-balance',
+                    component: RuncitworksCurrentBalance,
+                },
+                {
+                    path: 'cashflow',
+                    name: 'rw-cashflow',
+                    component: RuncitworksCashFlow,
+                },
+                {
+                    path: 'settings',
+                    name: 'rw-settings',
+                    component: RuncitworksSetup,
+                },
+            ],
         },
         { path: '/login', name: 'Login', component: Login },
     ],

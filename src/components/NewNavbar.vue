@@ -21,7 +21,7 @@ import Runcitworks from '../assets/runcitworks.svg'
                 </div>
             </router-link>
 
-            <router-link :to="{ name: 'Runcitworks' }" href=""
+            <router-link :to="{ name: 'rw-dashboard' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
@@ -30,16 +30,25 @@ import Runcitworks from '../assets/runcitworks.svg'
                 </div>
             </router-link>
 
-            <router-link :to="{ name: 'RuncitworksSalesPurchases' }" href=""
+            <router-link :to="{ name: 'rw-sales' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
-                        >Sales Purchases</span
+                        >Sales</span
                     >
                 </div>
             </router-link>
 
-            <router-link :to="{ name: 'RuncitworksExpenses' }" href=""
+            <router-link :to="{ name: 'rw-purchases' }" href=""
+                ><div class="flex items-center">
+                    <img :src="Runcitworks" class="w-10 h-10" alt="" />
+                    <span class="hidden xl:block text-2xl text-gray-200 pl-6"
+                        >Purchases</span
+                    >
+                </div>
+            </router-link>
+
+            <router-link :to="{ name: 'rw-expenses' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
@@ -48,7 +57,7 @@ import Runcitworks from '../assets/runcitworks.svg'
                 </div>
             </router-link>
 
-            <router-link :to="{ name: 'RuncitworksCurrentBalance' }" href=""
+            <router-link :to="{ name: 'rw-balance' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
@@ -56,7 +65,7 @@ import Runcitworks from '../assets/runcitworks.svg'
                     >
                 </div>
             </router-link>
-            <router-link :to="{ name: 'RuncitworksCashFlow' }" href=""
+            <router-link :to="{ name: 'rw-cashflow' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
@@ -65,11 +74,11 @@ import Runcitworks from '../assets/runcitworks.svg'
                 </div>
             </router-link>
 
-            <router-link :to="{ name: 'RuncitworksSetup' }" href=""
+            <router-link :to="{ name: 'rw-settings' }" href=""
                 ><div class="flex items-center">
                     <img :src="Runcitworks" class="w-10 h-10" alt="" />
                     <span class="hidden xl:block text-2xl text-gray-200 pl-6"
-                        >Setup</span
+                        >Settings</span
                     >
                 </div>
             </router-link>
