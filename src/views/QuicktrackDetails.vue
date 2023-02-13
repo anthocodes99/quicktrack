@@ -227,7 +227,7 @@ const submitPayment = async function (event) {
 
                         <!-- Add Sale Form -->
                         <DetailsAddSale
-                            class="mt-8 bg-[#1d1f21] p-4 rounded-lg border border-[#4b5457]"
+                            class="mt-8 bg-dark-700 p-4 rounded-lg border border-dark-400"
                             :products="currentMonthdataProducts"
                             @submit.prevent="createSale"
                         />
