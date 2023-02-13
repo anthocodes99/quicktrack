@@ -123,7 +123,7 @@ const balance = computed(() => {
 </script>
 
 <template>
-    <CompositeNav class="px-4">
+    <CompositeNav>
         <template v-if="!isInitialized">
             <div
                 class="w-full sm:max-w-md sm:mx-auto md:mx-0 pt-32 items-center"
