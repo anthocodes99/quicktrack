@@ -159,7 +159,7 @@ const submitPayment = async function (event) {
 
 <template>
     <CompositeNav>
-        <div class="w-full sm:max-w-md sm:mx-auto md:mx-0">
+        <div class="w-full sm:max-w-lg :mx-0">
             <template v-if="!isInitialized">
                 <div class="mt-32 flex justify-center" role="status">
                     <svg

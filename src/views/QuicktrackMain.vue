@@ -60,7 +60,8 @@ onMounted(async () => {
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <div class="w-full sm:max-w-md sm:mx-auto md:mx-0" v-else>
+        <!-- TODO: Error Page -->
+        <div class="w-full sm:max-w-lg md:mx-0" v-else>
             <HomeAccountsList :accounts="accounts" />
             <HomeCreateAccount class="pt-8 pb-8" />
             <!-- <HomeStats /> -->

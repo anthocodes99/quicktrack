@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png'
 </script>
 
 <template>
-    <nav class="block md:hidden mx-auto bg-[#212529] px-3 py-2">
+    <nav class="block sm:hidden mx-auto bg-[#212529] px-3 py-2">
         <div class="flex items-center justify-between">
             <span><img :src="Logo" width="32" height="32" alt="" /></span>
 
