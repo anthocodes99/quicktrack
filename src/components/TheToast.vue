@@ -14,7 +14,8 @@ const runCallback = function (e: () => void) {
 </script>
 
 <template>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- TODO: Transition Animation (left in, or opacity in) -->
+    <div class="fixed top-5 right-5 gap-2 flex flex-col">
         <template v-for="toast in toasts" :key="toast.id">
             <ToastPopUp
                 :title="toast.title"

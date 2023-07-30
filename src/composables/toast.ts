@@ -127,6 +127,13 @@ function clearToasts() {
     toasts.value = []
 }
 
+/*
+TODO: deprecate title
+TODO: success, error, info, warning to use flowbite svg
+
+
+*/
+
 export function useToast() {
     const state = {
         // we can't send toasts.value
