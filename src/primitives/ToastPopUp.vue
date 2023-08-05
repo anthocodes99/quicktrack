@@ -21,6 +21,10 @@ const props = defineProps<Props>()
         :style="{ opacity: `${opacity}%` }"
         role="alert"
     >
+        <!-- 
+            NOTE: The decision is made to not "unabstract" this portion of code
+                  the code is much more readable this way.
+         -->
         <template v-if="status == Status.Success">
             <FlowbiteCheck />
         </template>
@@ -34,7 +38,6 @@ const props = defineProps<Props>()
             <FlowbiteInfo />
         </template>
         <div class="ml-3 text-sm font-normal">{{ message }}</div>
-        <!-- CONSIDER: move file to primitive, or use own X button. -->
         <button
             type="button"
             class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-dark-700 dark:hover:bg-dark-600"
