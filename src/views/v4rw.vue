@@ -151,13 +151,13 @@ const balance = computed(() => {
         </template>
         <!-- v-else-if="monthdata.length = 0" -->
         <template v-else>
-            <main class="flex-auto mt-4 mx-4">
+            <main class="w-full sm:max-w-lg md:mx-0 pt-4 px-4">
                 <!-- Monthdata Select Field -->
-                <label class="text-2xl text-white" for="monthdata-selector"
-                    >Current Monthdata</label
-                >
+                <label class="text-2xl text-white" for="monthdata-selector">
+                    Month
+                </label>
                 <select
-                    class="block px-12 py-1 rounded-sm"
+                    class="block mt-2 w-4/6 mx-auto py-2 text-center text-lg rounded-md"
                     v-model="monthChosen"
                     id="monthdata-selector"
                 >
@@ -174,9 +174,6 @@ const balance = computed(() => {
                     :currentMonthdata="currentMonthdata"
                 ></router-view>
             </main>
-            <aside class="hidden lg:block border-2 mt-4 w-[18.5rem]">
-                <p class="text-3xl text-white">stuff</p>
-            </aside>
         </template>
     </CompositeNav>
 </template>
