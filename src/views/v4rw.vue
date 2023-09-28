@@ -11,7 +11,6 @@ import { Monthdata } from '../models/monthdata'
 import { useQuicktrackStore } from '../store/quicktrack'
 
 import CompositeNav from '../components/CompositeNav.vue'
-import Dashboard from './Runcitworks/RuncitworksDashboard.vue'
 import { useRuncitworks } from '../composables/runcitworks'
 
 // Composables
@@ -26,37 +25,6 @@ const monthdatas = computed(() => monthdataStore.monthdatas)
 const isInitialized = ref(false)
 const monthChosen = ref('')
 const currentMonthdata = ref<Monthdata>()
-
-// test data for runcitSale and runcitPurchase
-const runcitSale = {
-    id: 'uuid-test',
-    accountName: 'Ironmouse',
-    description: 'Cinnamoroll x 1 @ RM 4.00',
-    formattedAmount: 'RM 4.00',
-}
-
-const runcitSaleList = [
-    { date: '12 Dec 2022', sales: [runcitSale, runcitSale, runcitSale] },
-    { date: '11 Dec 2022', sales: [runcitSale, runcitSale, runcitSale] },
-]
-
-const runcitPurchase = {
-    id: 'uuid-test',
-    productName: 'Cinnamoroll',
-    description: '12 pcs @ RM 4.00',
-    formattedAmount: 'RM 48.00',
-}
-
-const runcitPurchaseList = [
-    {
-        date: '12 Dec 2022',
-        purchases: [runcitPurchase, runcitPurchase, runcitPurchase],
-    },
-    {
-        date: '11 Dec 2022',
-        purchases: [runcitPurchase, runcitPurchase, runcitPurchase],
-    },
-]
 
 // Template functions
 function updateMonth(month: string) {
