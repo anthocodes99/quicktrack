@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RuncitAddMonthModal from '../components/Runcitworks/RuncitAddMonthModal.vue'
+
 import { useMonthdataStore } from '../store/monthdata'
 
 import { ref, onMounted, watch, computed } from 'vue'
@@ -21,6 +23,7 @@ const quicktrack = useQuicktrackStore()
 
 // Template refs
 const monthdatas = computed(() => monthdataStore.monthdatas)
+const isNewMonthDialogOpen = ref(false)
 // const isInitialized = computed(() => monthdataStore.isInitialized)
 const isInitialized = ref(false)
 const monthChosen = ref('')
@@ -119,11 +122,40 @@ const balance = computed(() => {
         </template>
         <!-- v-else-if="monthdata.length = 0" -->
         <template v-else>
+            <RuncitAddMonthModal
+                :currentMonthData="currentMonthdata"
+                :monthdatas="monthdatas"
+                :isNewMonthDialogOpen="isNewMonthDialogOpen"
+                @close="isNewMonthDialogOpen = false"
+            />
             <main class="w-full sm:max-w-lg md:mx-0 pt-4 px-4">
                 <!-- Monthdata Select Field -->
-                <label class="text-2xl text-white" for="monthdata-selector">
-                    Month
-                </label>
+                <div class="flex justify-between">
+                    <label class="text-2xl text-white" for="monthdata-selector">
+                        Month
+                    </label>
+                    <div>
+                        <button @click="isNewMonthDialogOpen = true">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                fill="none"
+                            >
+                                <g clip-path="url(#a)">
+                                    <path
+                                        fill="#E94F37"
+                                        d="M0 8a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V8Z"
+                                    />
+                                    <path
+                                        fill="#fff"
+                                        d="M25.333 17.333h-8v8h-2.666v-8h-8v-2.666h8v-8h2.666v8h8v2.666Z"
+                                    />
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
                 <select
                     class="block mt-2 w-4/6 mx-auto py-2 text-center text-lg rounded-md"
                     v-model="monthChosen"
