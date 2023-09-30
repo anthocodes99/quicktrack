@@ -3,7 +3,7 @@ import RuncitPurchaseItem from './RuncitPurchaseItem.vue'
 
 interface RuncitPurchaseList {
     date: string
-    purchases: RuncitPurchase[]
+    transactions: RuncitPurchase[]
 }
 
 interface RuncitPurchase {
@@ -23,7 +23,7 @@ const props = defineProps<Props>()
     <ul class="flex-auto flex-col items-center">
         <li v-for="day in purchaseList" :key="day.date">
             <h4 class="text-2xl text-center text-white">{{ day.date }}</h4>
-            <template v-for="purchase in day.purchases">
+            <template v-for="purchase in day.transactions">
                 <RuncitPurchaseItem v-bind="purchase" />
             </template>
         </li>
