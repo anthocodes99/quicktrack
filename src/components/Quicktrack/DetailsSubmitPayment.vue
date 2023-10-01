@@ -17,6 +17,7 @@ const emits = defineEmits<{ (e: 'submitPayment', event): void }>()
                 id="submitPayment"
                 name="paymentAmount"
                 value="0"
+                step="0.0001"
                 required
             />
             <BaseButton class="mt-8 font-semibold" type="submit"
