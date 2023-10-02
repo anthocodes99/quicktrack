@@ -11,7 +11,9 @@ const props = defineProps<Props>()
 <template>
     <li class="flex items-center justify-between my-2 py-1 border-b">
         <div>
-            <h3 class="text-xl text-gray-200">{{ accountName }}</h3>
+            <h3 class="text-xl text-gray-200">
+                {{ accountName ?? '----------' }}
+            </h3>
             <span class="text-sm text-gray-500">{{ description }}</span>
         </div>
         <div>
