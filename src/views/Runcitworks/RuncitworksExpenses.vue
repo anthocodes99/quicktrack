@@ -7,6 +7,12 @@ import { Monthdata } from '../../models/monthdata'
 import { useTransactionParser } from '../../composables/transactionParser'
 import BaseInput from '../../primitives/BaseInput.vue'
 import BaseButton from '../../primitives/BaseButton.vue'
+import { destructureAxios } from '../../utils/utils'
+import axios from 'axios'
+import { useStore } from '../../store'
+import { useToast } from '../../composables/toast'
+
+import { TransactionType } from '../../models/monthdata'
 
 interface Props {
     currentMonthdata: Monthdata
@@ -25,6 +31,8 @@ const revealAddForm = ref(false)
 
 const currentMonthdata = toRef(props, 'currentMonthdata')
 
+const store = useStore()
+const toast = useToast()
 const monthdataStore = useMonthdataStore()
 const sortByDate = useTransactionParser()
 
@@ -43,11 +51,44 @@ const expensesList = computed(() => {
                 expense.quantity > 0 ? 's' : ''
             } @ RM ${(+expense.unit_price).toFixed(2)}`,
             // RM Z.ZZ
-            formattedAmount: `RM ${(+expense.unit_price).toFixed(2)}`,
+            formattedAmount: `RM ${(
+                +expense.unit_price * +expense.quantity
+            ).toFixed(2)}`,
         })
     })
     return sortByDate.sortTransactionsByDate(table)
 })
+
+const createExpense = async function (event) {
+    const config = {
+        headers: {
+            'X-CSRFToken': store.csrftoken,
+        },
+    }
+    const formData = Object.fromEntries(new FormData(event.target))
+    const data = {
+        monthdata: currentMonthdata.value.id,
+        date: formData.date,
+        description: formData.description,
+        unit_price: formData.unit_price,
+        quantity: formData.quantity,
+    }
+    const [res, err] = await destructureAxios(
+        axios.post(`/api/v1/expenses`, data, config)
+    )
+    if (res) {
+        monthdataStore.addTransaction(TransactionType.Expense, res.data)
+        toast.success('Transaction added!', 'Transaction added successfully.')
+        return
+    }
+    // else
+    toast.error(
+        'Error!',
+        `An error occured while adding expense.\n ${Object.values(
+            err.response.data
+        )}`
+    )
+}
 
 onMounted(() => {
     console.log(expensesList.value)
@@ -70,23 +111,38 @@ onMounted(() => {
         <form
             class="bg-dark-700 p-4 rounded-lg border border-dark-400"
             v-if="revealAddForm"
-            @submit.prevent=""
+            @submit.prevent="createExpense"
         >
             <div class="">
                 <label class="text-gray-400 text-lg" for="date">Date</label>
-                <BaseInput type="date" id="date" class="h-10 w-48" />
+                <BaseInput
+                    type="date"
+                    name="date"
+                    id="date"
+                    class="h-10 w-48"
+                />
             </div>
             <div class="mt-4">
                 <label class="text-gray-400 text-lg" for="description"
                     >Description</label
                 >
-                <BaseInput type="text" id="description" class="h-10 w-48" />
+                <BaseInput
+                    type="text"
+                    name="description"
+                    id="description"
+                    class="h-10 w-48"
+                />
             </div>
             <div class="mt-4">
                 <label class="text-gray-400 text-lg" for="unit_price"
                     >Unit Price</label
                 >
-                <BaseInput type="number" id="unit_price" class="h-10 w-48" />
+                <BaseInput
+                    type="number"
+                    name="unit_price"
+                    id="unit_price"
+                    class="h-10 w-48"
+                />
             </div>
             <div class="mt-4">
                 <label class="text-gray-400 text-lg" for="quantity"
@@ -95,12 +151,13 @@ onMounted(() => {
                 <BaseInput
                     type="number"
                     step="1"
+                    name="quantity"
                     id="quantity"
                     class="h-10 w-48"
                 />
             </div>
             <div class="mt-4">
-                <BaseButton>Create Expense</BaseButton>
+                <BaseButton type="submit">Create Expense</BaseButton>
             </div>
         </form>
         <template v-if="expensesList.length == 0">
