@@ -4,12 +4,10 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['',
-                 '', '', 
-                 '', 
-                 '', 
-                 '',
-                ]
+ALLOWED_HOSTS = [x.strip() for x in os.environ.get('DJANGO_ALLOWED_HOSTS').split(',')]
+
+if ALLOWED_HOSTS is None:
+    raise Exception('Please set the environment variable DJANGO_ALLOWED_HOSTS!')
 
 # SSL / CSRF / CSP
 
